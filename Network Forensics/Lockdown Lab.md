@@ -20,12 +20,23 @@ Q5 : The newly planted shell calls back to the attacker over an uncommon but fir
 - Ta phân tích file : shell.aspx và dịch ngược thì ta biết được là cổng được kết nối là : 4443
 <img width="1278" height="1027" alt="image" src="https://github.com/user-attachments/assets/47fc2a0f-9fb9-4cd0-b8d9-21f49662b3ea" />
 
-Q6 : 
+Q6 : Your memory snapshot captures the system’s kernel in situ, providing vital context for the breach. What is the kernel base address in the dump?
+- Để tìm địa chỉ của nhân kernel ta sử dụng volatility3 để phân tích file .mem và ta có địa chỉ : 
 <img width="1099" height="61" alt="image" src="https://github.com/user-attachments/assets/9710c4d2-08aa-4643-bac7-a386c22843a9" />
 
-Q7 : 
+Q7 : A trusted service launches an unfamiliar executable residing outside the usual IIS stack, signalling a persistence implant. What is the final full on-disk path of that executable, and which MITRE ATT&CK persistence technique ID corresponds to this behaviour?
+- Kiểm tra PsTree ta phát hiện file update.exe có dấu hiệu đáng ngờ và có địa chỉ là : **C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\updatenow.exe**
 <img width="1109" height="589" alt="image" src="https://github.com/user-attachments/assets/87a56139-5846-4633-8f5b-cf275a7c8995" />
 
-Q8 : 
+Q8 : The reverse shell’s outbound traffic is handled by a built-in Windows process that also spawns the implanted executable. What is the name of this process, and what PID does it run under?
+- Sử dung PsList của volatility3 ta được thấy chương trình w3wp.exe đang chạy chương trình và có PID là : **4332**
 <img width="1106" height="557" alt="image" src="https://github.com/user-attachments/assets/7f6166e8-bac3-47c6-8d2d-356802b67632" />
 
+Q9 : Static inspection reveals the binary has been packed to hinder analysis. Which packer was used to obfuscate it?
+- Ta có thể dễ dàng kiểm tra file được đóng gói bằng **UPX** từ các dấu hiệu như nó có upx0, upx1
+
+Q10 : Threat-intel analysis shows the malware beaconing to its command-and-control host. Which fully qualified domain name (FQDN) does it contact?
+
+Q11 : Open-source intel associates that hash with a well-known commodity RAT. To which malware family does the sample belong?
+- Ta đẩy file updatenow.exe lên VirusTotal và kiểm tra. Ta có thể thấy rằng mã độc này thuộc loại : **AgentTesla**
+<img width="1832" height="753" alt="image" src="https://github.com/user-attachments/assets/019ab0cc-735a-4330-9fe2-17f2fb7b9846" />
